@@ -1,5 +1,6 @@
 const { Reaction } = require("../../models");
 
+// * `POST` to create a reaction stored in a single thought's `reactions` array field
 const addReactionForThought = async (req, res) => {
   try {
     const { id } = req.params;
@@ -17,7 +18,7 @@ const addReactionForThought = async (req, res) => {
       .json({ success: false, error: "Failed to create reaction" });
   }
 };
-
+// * `DELETE` to pull and remove a reaction by the reaction's `reactionId` value
 const deleteReactionFromThought = async (req, res) => {
   try {
     const { reactionId, thoughtId } = req.params;
@@ -35,4 +36,4 @@ const deleteReactionFromThought = async (req, res) => {
   }
 };
 
-module.exports = { addReactionForThought, deleteReactionOfThought };
+module.exports = { addReactionForThought, deleteReactionFromThought };
