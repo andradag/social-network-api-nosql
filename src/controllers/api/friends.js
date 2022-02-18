@@ -5,11 +5,11 @@ const addNewFriendToUser = async (req, res) => {
     const { id } = req.params;
     const { userId } = req.body;
 
-    const user = await User.findByIdAndUpdate(id, {
-      $push: { friends: userId },
+    const newFriend = await User.findByIdAndUpdate(userId, {
+      $push: { friends: { _id: id } },
     });
 
-    return res.json({ success: true, data: user });
+    return res.json({ success: true, data: newFriend });
   } catch (error) {
     console.log(`[ERROR]: Failed to create friend for user | ${error.message}`);
     return res
@@ -17,15 +17,16 @@ const addNewFriendToUser = async (req, res) => {
       .json({ success: false, error: "Failed to create friend for user" });
   }
 };
+
 const deleteUserFriend = async (req, res) => {
   try {
-    const { friendId, id } = req.params;
+    const deleteFriend = await User.findByIdAndUpdate(
+      { _id: req.params.userId },
+      { $pull: { friends: req.params.friendId } },
+      { new: true }
+    );
 
-    const user = await User.findByIdAndUpdate(id, {
-      $pull: { friends: friendId },
-    });
-
-    return res.json({ success: true, data: user });
+    return res.json({ success: true, data: deleteFriend });
   } catch (error) {
     console.log(`[ERROR]: Failed to delete friend | ${error.message}`);
     return res

@@ -1,4 +1,4 @@
-const { Thought } = require("../../models");
+const { Reaction } = require("../../models");
 
 const addReactionForThought = async (req, res) => {
   try {
