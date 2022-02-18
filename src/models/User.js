@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const { validateEmail } = require("../utils");
 
 // import Thought model
 const thoughts = require("./Thoughts");
