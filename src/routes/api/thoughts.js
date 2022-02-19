@@ -16,6 +16,6 @@ router.post("/", createThought);
 router.put("/:id", updateThoughtByID);
 router.delete("/:id", deleteThoughtByID);
 
-router.use("/:thoughtId/reactions", reactions);
+router.use("/:id/reactions", reactions);
 
 module.exports = router;

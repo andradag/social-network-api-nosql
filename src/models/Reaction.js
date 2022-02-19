@@ -2,6 +2,7 @@ const { Schema } = require("mongoose");
 const { formatTimestamp } = require("../utils");
 
 const reactionSchema = {
+  _id: false,
   reactionId: {
     type: Schema.Types.ObjectId,
     required: true,
@@ -27,6 +28,7 @@ const schema = new Schema(reactionSchema, {
   toJSON: {
     getters: true,
   },
+  id: false,
 });
 
 module.exports = schema;

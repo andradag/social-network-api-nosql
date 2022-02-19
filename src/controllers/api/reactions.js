@@ -1,4 +1,4 @@
-const { Reaction } = require("../../models");
+const { Thoughts } = require("../../models");
 
 // * `POST` to create a reaction stored in a single thought's `reactions` array field
 const addReactionForThought = async (req, res) => {
@@ -6,9 +6,13 @@ const addReactionForThought = async (req, res) => {
     const { id } = req.params;
     const { reactionBody, username } = req.body;
 
-    const updatedThought = await Thought.findByIdAndUpdate(id, {
-      $pull: { reactions: { reactionBody, username } },
-    });
+    const updatedThought = await Thoughts.findByIdAndUpdate(
+      id,
+      {
+        $push: { reactions: { reactionBody, username } },
+      },
+      { new: true }
+    );
 
     return res.json({ success: true, data: updatedThought });
   } catch (error) {
@@ -21,9 +25,9 @@ const addReactionForThought = async (req, res) => {
 // * `DELETE` to pull and remove a reaction by the reaction's `reactionId` value
 const deleteReactionFromThought = async (req, res) => {
   try {
-    const { reactionId, thoughtId } = req.params;
+    const { reactionId, id } = req.params;
 
-    const thought = await Thought.findByIdAndUpdate(thoughtId, {
+    const thought = await Thoughts.findByIdAndUpdate(id, {
       $pull: { reactions: { reactionId } },
     });
 

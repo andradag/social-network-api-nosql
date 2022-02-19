@@ -1,9 +1,9 @@
-const { Thought } = require("../../models");
+const { Thoughts } = require("../../models");
 
 const getAllThought = async (req, res) => {
   try {
-    const Thought = await Thought.find({}).populate("reactions");
-    return res.json({ success: true, data: thought });
+    const thoughts = await Thoughts.find({}).populate("reactions");
+    return res.json({ success: true, data: thoughts });
   } catch (error) {
     console.log(
       `[ERROR]: Failed to get all thoughts from DB | ${error.message}`
@@ -16,7 +16,7 @@ const getAllThought = async (req, res) => {
 const getThoughtByID = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await Thought.findById(id).populate("reactions");
+    const thought = await Thoughts.findById(id).populate("reactions");
     return res.json({ success: true, data: thought });
   } catch (error) {
     console.log(`[ERROR]: Failed to get user by ID | ${error.message}`);
@@ -28,7 +28,7 @@ const getThoughtByID = async (req, res) => {
 const createThought = async (req, res) => {
   try {
     const { thoughtText, username, userId } = req.body;
-    const user = await Thought.create({ thoughtText, username, userId });
+    const thought = await Thoughts.create({ thoughtText, username, userId });
     return res.json({ success: true, data: thought });
   } catch (error) {
     console.log(`[ERROR]: Failed to create user | ${error.message}`);
@@ -42,13 +42,13 @@ const updateThoughtByID = async (req, res) => {
     const { id } = req.params;
     const body = req.body;
 
-    const thought = await Thought.findByIdAndUpdate(
+    const thoughts = await Thoughts.findByIdAndUpdate(
       id,
       { ...body },
       { new: true }
     );
 
-    return res.json({ success: true, data: thought });
+    return res.json({ success: true, data: thoughts });
   } catch (error) {
     console.log(`[ERROR]: Failed to update thought by ID | ${error.message}`);
     return res
@@ -60,7 +60,7 @@ const updateThoughtByID = async (req, res) => {
 const deleteThoughtByID = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await Thought.findByIdAndDelete(id);
+    const thought = await Thoughts.findByIdAndDelete(id);
     return res.json({ success: true, data: thought });
   } catch (error) {
     console.log(`[ERROR]: Failed to delete thought from DB | ${error.message}`);
